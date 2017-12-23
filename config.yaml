@@ -1,0 +1,25 @@
+default:
+  usePolling: yes
+
+  products:
+    - "BTC-USD"
+    - "BCH-USD"
+    - "ETH-USD"
+    - "LTC-USD"
+  defaultCurrency: "USD"
+
+  telegram:
+    # Pass this secret as environmental variable
+    botToken: null
+
+  gdax:
+    apiUri: "https://api.gdax.com"
+    wsUri: "wss://ws-feed.gdax.com"
+
+prod:
+  usePolling: no
+
+# Hostname-to-environment dictionary
+hostnames:
+  dev:
+    - "*.local"

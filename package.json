@@ -1,0 +1,21 @@
+{
+  "name": "thecoinsbot",
+  "version": "0.1.0",
+  "description": "Telegram bot for real-time coins pricing from GDAX",
+  "scripts": {
+    "start": "node index.js",
+    "debug": "eval $(egrep -v '^#' .env | xargs) ./node_modules/.bin/nodemon --inspect index.js | ./node_modules/.bin/pino"
+  },
+  "author": "Alessandro Segala",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "gdax": "github:coinbase/gdax-node",
+    "pino": "^4.10.2",
+    "smconfig": "^0.2.4",
+    "telegraf": "^3.17.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.3"
+  }
+}

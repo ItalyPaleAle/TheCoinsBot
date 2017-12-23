@@ -1,0 +1,4 @@
+{
+	"ignore": ["test/*", "docs/*"],
+	"ext": "js json yaml ts"
+}
