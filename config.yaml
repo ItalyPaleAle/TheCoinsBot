@@ -15,6 +15,14 @@ default:
     LTC-USD:
       - "litecoin"
   defaultCurrency: "USD"
+  currencySymbols:
+    USD: "$"
+    EUR: "€"
+    GBP: "£"
+    BTC: "Ƀ"
+    BCH: "Ƀ"
+    ETH: "Ξ"
+    LTC: "Ł"
 
   telegram:
     # Pass this secret as environmental variable
