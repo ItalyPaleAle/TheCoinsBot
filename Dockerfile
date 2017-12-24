@@ -16,5 +16,6 @@ COPY . .
 
 # Start the app
 ENV NODE_ENV production
-CMD npm start
+CMD npm run production
+VOLUME /var/log/
 EXPOSE 3000
