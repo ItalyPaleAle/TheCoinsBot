@@ -6,6 +6,14 @@ default:
     - "BCH-USD"
     - "ETH-USD"
     - "LTC-USD"
+  aliases:
+    BTC-USD:
+      - "bitcoin"
+    ETH-USD:
+      - "ethereum"
+      - "ether"
+    LTC-USD:
+      - "litecoin"
   defaultCurrency: "USD"
 
   telegram:
