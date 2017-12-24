@@ -5,7 +5,7 @@ default:
     # If polling: no
     url: "https://server.tld:8443/secret-path" # Must be an https address
     path: "/secret-path"
-    port: 5000
+    port: 3000
     ssl:
       enabled: no # Disabled if the Node.js app is behind a proxy that does SSL offloading
       key: "server-key.pem"
@@ -43,8 +43,9 @@ default:
     apiUri: "https://api.gdax.com"
     wsUri: "wss://ws-feed.gdax.com"
 
-prod:
-  usePolling: no
+production:
+  webhook:
+    polling: no
 
 # Hostname-to-environment dictionary
 hostnames:
