@@ -1,5 +1,16 @@
 default:
-  usePolling: yes
+  webhook:
+    polling: yes
+
+    # If polling: no
+    url: "https://server.tld:8443/secret-path" # Must be an https address
+    path: "/secret-path"
+    port: 5000
+    ssl:
+      enabled: no # Disabled if the Node.js app is behind a proxy that does SSL offloading
+      key: "server-key.pem"
+      cert: "server-cert.pem"
+      ca: "ca.pem"
 
   products:
     - "BTC-USD"
