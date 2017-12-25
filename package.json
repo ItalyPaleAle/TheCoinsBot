@@ -4,7 +4,6 @@
   "description": "Telegram bot for real-time coins pricing from GDAX",
   "scripts": {
     "start": "node index.js",
-    "production": "node index.js > /var/log/app.log",
     "debug": "eval $(egrep -v '^#' .env | xargs) ./node_modules/.bin/nodemon --inspect index.js | ./node_modules/.bin/pino"
   },
   "author": "Alessandro Segala",
