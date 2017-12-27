@@ -1,5 +1,7 @@
 'use strict'
 
+const moment = require('moment')
+
 // Answer to questions asking for the price
 module.exports = (state) => {
     const {bot, telemetry, config, coins} = state
@@ -25,11 +27,18 @@ module.exports = (state) => {
                     response += 'Price not yet available. Please try again in a few moments.'
                 }
                 else {
+                    const updateMoment = moment(price.time)
+                    const nowMoment = moment()
+
+                    // If difference is less than 3 seconds, display "just now" for last update
+                    let lastUpdate = (nowMoment.diff(updateMoment) < 3000) ? 'Just now' : updateMoment.fromNow()
+
                     response += 'Price: ' + currencySymbols[dest] + formatNumber((price.price / 100).toFixed(2)) + '\n'
                     response += '24hr Change: ' + price.change_percent + '%\n'
                     response += '24hr Volume: ' + currencySymbols[source] + formatNumber(price.volume_24h) + '\n'
                     response += '24hr Low: ' + currencySymbols[dest] + formatNumber((price.low_24h / 100).toFixed(2)) + '\n'
-                    response += '24hr High: ' + currencySymbols[dest] + formatNumber((price.high_24h / 100).toFixed(2))
+                    response += '24hr High: ' + currencySymbols[dest] + formatNumber((price.high_24h / 100).toFixed(2)) + '\n'
+                    response += 'Last update: ' + lastUpdate
                 }
                 allResponses.push(response)
             })
