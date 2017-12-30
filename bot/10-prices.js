@@ -61,18 +61,21 @@ module.exports = (state) => {
                     response += 'Price not yet available. Please try again in a few moments.'
                 }
                 else {
-                    const updateMoment = moment(price.time)
-                    const nowMoment = moment()
+                    let lastUpdate = 'n/a'
+                    if(price.time) {
+                        const updateMoment = price.time ? moment(price.time) : 0
+                        const nowMoment = price.time ? moment() : 0
 
-                    // If difference is less than 5 seconds, display "just now" for last update
-                    let lastUpdate = (nowMoment.diff(updateMoment) < 5000) ? 'just now' : updateMoment.fromNow()
+                        // If difference is less than 5 seconds, display "just now" for last update
+                        lastUpdate = (nowMoment.diff(updateMoment) < 5000) ? 'just now' : updateMoment.fromNow()
+                    }
 
-                    response += 'Price: ' + currencySymbols[dest] + formatNumber((price.price / 100).toFixed(2)) + '\n'
-                    response += '24hr Change: ' + price.change_percent + '%\n'
-                    response += '24hr Volume: ' + currencySymbols[source] + formatNumber(price.volume_24h) + '\n'
-                    response += '24hr Low: ' + currencySymbols[dest] + formatNumber((price.low_24h / 100).toFixed(2)) + '\n'
-                    response += '24hr High: ' + currencySymbols[dest] + formatNumber((price.high_24h / 100).toFixed(2)) + '\n'
-                    response += 'Last update: ' + lastUpdate
+                    response += 'Price: ' + currencySymbols[dest] + formatNumber((price.price / 100).toFixed(2))
+                    response += '\n24hr Change: ' + price.change_percent + '%'
+                    response += '\n24hr Volume: ' + currencySymbols[source] + formatNumber(price.volume_24h)
+                    response += '\n24hr Low: ' + currencySymbols[dest] + formatNumber((price.low_24h / 100).toFixed(2))
+                    response += '\n24hr High: ' + currencySymbols[dest] + formatNumber((price.high_24h / 100).toFixed(2))
+                    response += '\nLast update: ' + lastUpdate
                 }
                 allResponses.push(response)
             })
