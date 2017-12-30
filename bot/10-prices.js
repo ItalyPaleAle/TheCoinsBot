@@ -70,11 +70,15 @@ module.exports = (state) => {
                         lastUpdate = (nowMoment.diff(updateMoment) < 5000) ? 'just now' : updateMoment.fromNow()
                     }
 
-                    response += 'Price: ' + currencySymbols[dest] + formatNumber((price.price / 100).toFixed(2))
+                    let decimalDigits = config.get('decimalDigits.' + el)
+                    if(decimalDigits === undefined) {
+                        decimalDigits = 2
+                    }
+                    response += 'Price: ' + currencySymbols[dest] + formatNumber(price.price.toFixed(decimalDigits))
                     response += '\n24hr Change: ' + price.change_percent + '%'
                     response += '\n24hr Volume: ' + currencySymbols[source] + formatNumber(price.volume_24h)
-                    response += '\n24hr Low: ' + currencySymbols[dest] + formatNumber((price.low_24h / 100).toFixed(2))
-                    response += '\n24hr High: ' + currencySymbols[dest] + formatNumber((price.high_24h / 100).toFixed(2))
+                    response += '\n24hr Low: ' + currencySymbols[dest] + formatNumber(price.low_24h.toFixed(decimalDigits))
+                    response += '\n24hr High: ' + currencySymbols[dest] + formatNumber(price.high_24h.toFixed(decimalDigits))
                     response += '\nLast update: ' + lastUpdate
                 }
                 allResponses.push(response)

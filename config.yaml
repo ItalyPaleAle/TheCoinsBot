@@ -33,6 +33,10 @@ default:
       - "ether(s?)"
     LTC:
       - "litecoin(s?)"
+  decimalDigits:
+    # All other products have 2 digits
+    "ETH-BTC": 5
+    "LTC-BTC": 5
   # https://support.gdax.com/customer/en/portal/articles/2425188-which-countries-and-states-can-access-gdax-
   regions:
     AU:
