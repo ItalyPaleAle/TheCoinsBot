@@ -1,18 +1,19 @@
 'use strict'
 
-const pkg = require('../package.json')
 const fs = require('fs')
 
 // Responds to /start
 module.exports = (state) => {
     const {bot, telemetry} = state
 
-    // Help message
-    const helpMessage = fs.readFileSync('./extra/HelpText.md', 'utf8').replace('{Version}', pkg.version)
+    // Start message
+    const helpMessage = fs.readFileSync('./extra/StartText.md', 'utf8')
 
-    bot.start((ctx) => {
+    bot.start(async (ctx, next) => {
         telemetry.info({action: 'replied', reply: 'start', from: ctx.from.id})
 
-        return ctx.replyWithMarkdown(helpMessage)
+        await ctx.replyWithMarkdown(helpMessage)
+
+        return next()
     })
 }

@@ -12,20 +12,63 @@ default:
       cert: "server-cert.pem"
       ca: "ca.pem"
 
+  mongodbUrl: "mongodb://localhost/TheCoinsBot"
+
   products:
     - "BTC-USD"
+    - "BTC-EUR"
+    - "BTC-GBP"
     - "BCH-USD"
     - "ETH-USD"
+    - "ETH-BTC"
+    - "ETH-EUR"
     - "LTC-USD"
+    - "LTC-BTC"
+    - "LTC-EUR"
   aliases:
-    BTC-USD:
-      - "bitcoin"
-    ETH-USD:
-      - "ethereum"
-      - "ether"
-    LTC-USD:
-      - "litecoin"
-  defaultCurrency: "USD"
+    BTC:
+      - "bitcoin(s?)"
+    ETH:
+      - "ethereum(s?)"
+      - "ether(s?)"
+    LTC:
+      - "litecoin(s?)"
+  # https://support.gdax.com/customer/en/portal/articles/2425188-which-countries-and-states-can-access-gdax-
+  regions:
+    AU:
+      label: "🇦🇺 Australia"
+      # AU can trade ETH-BTC and LTC-BTC only, but showing USD prices too for reference
+      products: ["ETH-BTC", "LTC-BTC", "BTC-USD", "BCH-USD", "ETH-USD", "LTC-USD"]
+      fiat: "USD"
+    CA:
+      label: "🇨🇦 Canada"
+      # CA can trade ETH-BTC and LTC-BTC only, but showing USD prices too for reference
+      products: ["ETH-BTC", "LTC-BTC", "BTC-USD", "BCH-USD", "ETH-USD", "LTC-USD"]
+      fiat: "USD"
+    EU:
+      label: "🇪🇺 Europe"
+      products: ["BTC-EUR", "ETH-EUR", "LTC-EUR", "ETH-BTC", "LTC-BTC"]
+      fiat: "EUR"
+    SG:
+      label: "🇸🇬 Singapore"
+      # SG can trade ETH-BTC and LTC-BTC only, but showing USD prices too for reference
+      products: ["ETH-BTC", "LTC-BTC", "BTC-USD", "BCH-USD", "ETH-USD", "LTC-USD"]
+      fiat: "USD"
+    US:
+      label: "🇺🇸 USA"
+      products: ["BTC-USD", "BCH-USD", "ETH-USD", "LTC-USD", "ETH-BTC", "LTC-BTC"]
+      fiat: "USD"
+    UK:
+      label: "🇬🇧 United Kingdom"
+      products: ["BTC-GBP", "BTC-EUR", "ETH-EUR", "LTC-EUR", "ETH-BTC", "LTC-BTC"]
+      fiat: ["GBP", "EUR"]
+    ZZ:
+      label: "🌍 Rest of World"
+      # Show USD prices for ROW
+      products: ["BTC-USD", "BCH-USD", "ETH-USD", "LTC-USD", "ETH-BTC", "LTC-BTC"]
+      fiat: "USD"
+  # For users that do not have a region set (for some reason)
+  defaultRegion: "ZZ"
   currencySymbols:
     USD: "$"
     EUR: "€"

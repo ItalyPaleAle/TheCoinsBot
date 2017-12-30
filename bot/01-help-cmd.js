@@ -2,6 +2,7 @@
 
 const pkg = require('../package.json')
 const fs = require('fs')
+const Markup = require('telegraf/markup')
 
 // Responds to /help and to "help" messages
 module.exports = (state) => {
@@ -13,7 +14,9 @@ module.exports = (state) => {
     const sendHelp = (ctx) => {
         telemetry.info({action: 'replied', reply: 'help', from: ctx.from.id})
 
-        return ctx.replyWithMarkdown(helpMessage)
+        return ctx.replyWithMarkdown(helpMessage, Markup.inlineKeyboard([
+            Markup.urlButton('Project on GitHub', 'https://github.com/EgoAleSum/TheCoinsBot'),
+          ]).extra())
     }
     bot.command('help', sendHelp)
     bot.hears('help', sendHelp)
