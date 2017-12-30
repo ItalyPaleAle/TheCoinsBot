@@ -90,6 +90,9 @@ module.exports = (state) => {
         }
     }
 
+    // Register multiple commands to send prices for individual products
+    const triggers = []
+
     // Answer with specific products, full name
     allProducts.forEach((product) => {
         // Match coin symbol, with and without the dash
@@ -99,7 +102,10 @@ module.exports = (state) => {
         ]
 
         // Create trigger (case-insensitive)
-        bot.hears(new RegExp('^\\s*(' + alternatives.join('|')  + ')\\s*$', 'i'), sendPriceFunc(product))
+        triggers.push({
+            match: new RegExp('^\\s*(' + alternatives.join('|')  + ')\\s*$', 'i'),
+            arg: product
+        })
     })
 
     // Anser with specific products, but without specifying destination currency
@@ -123,10 +129,42 @@ module.exports = (state) => {
         }
 
         // Create trigger (case-insensitive)
-        bot.hears(new RegExp('^\\s*(' + alternatives.join('|')  + ')\\s*$', 'i'), sendPriceFunc(coin))
+        triggers.push({
+            match: new RegExp('^\\s*(' + alternatives.join('|')  + ')\\s*$', 'i'),
+            arg: coin
+        })
     })
 
+    // Register all triggers
+    triggers.forEach((trigger) => {
+        bot.hears(trigger.match, sendPriceFunc(trigger.arg))
+    })
+
+    // Treat the \price command the same way we treat messages without that
+    bot.command('price', (ctx) => {
+        // Find the match in the list of triggers
+        // Strip "/price" from the text
+        const text = ctx.message.text.substr(6).trim()
+
+        // If text is empty, show all prices
+        if(!text) {
+            return sendPriceFunc()(ctx)
+        }
+
+        // Find the first one matching
+        let i = 0
+        while(i < triggers.length && !text.match(triggers[i].match)) {
+            i++
+        }
+
+        // Did we find a match? Otherwise, do nothing
+        if(i < triggers.length) {
+            return sendPriceFunc(triggers[i].arg)(ctx)
+        }
+    })
 
     // Answer with all products
-    bot.hears(/price|quote|all|coins/i, sendPriceFunc())
+    // This needs to go last
+    bot.hears(/^\s*(price|quote|all|coins)/i, sendPriceFunc())
+
 }
