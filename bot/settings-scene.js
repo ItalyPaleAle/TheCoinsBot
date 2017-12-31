@@ -3,9 +3,10 @@
 const Composer = require('telegraf/composer')
 const Markup = require('telegraf/markup')
 const WizardScene = require('telegraf/scenes/wizard')
+const BotBaseMiddleware = require('../lib/BotBaseMiddleware')
 
 module.exports = (state) => {
-    const {stage, telemetry, config} = state
+    const {stage, telemetry, pino, config} = state
 
     // List of regions
     const regions = config.get('regions')
@@ -63,6 +64,9 @@ module.exports = (state) => {
         step1,
         regionHandler
     )
+
+    // Logic for every route of the wizard
+    settingsWizard.use(BotBaseMiddleware(state, {scene: 'settings-wizard'}))
 
     // Middleware when leaving the scene
     settingsWizard.leave((ctx, next) => {
