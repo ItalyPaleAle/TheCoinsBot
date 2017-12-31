@@ -18,10 +18,20 @@ module.exports = (state) => {
         await ctx.reply('To start, what is your region?')
 
         // List of regions
-        const keys = Object.keys(regions).map((id) => {
-            return [Markup.callbackButton(regions[id].label, id)]
-        })
-        const result = await ctx.reply('Choose:', Markup.inlineKeyboard(keys).extra())
+        const keyboard = []
+        const keys = Object.keys(regions)
+        for(let i = 0; i < keys.length; i++) {
+            const id = keys[i]
+            if(i % 2) {
+                // Odd: add to the last row
+                keyboard[(i - 1) / 2].push(Markup.callbackButton(regions[id].label, id))
+            }
+            else {
+                // Even -> start a new line
+                keyboard.push([Markup.callbackButton(regions[id].label, id)])
+            }
+        }
+        const result = await ctx.reply('Choose:', Markup.inlineKeyboard(keyboard).extra())
         // Save chat.id and message_id in the session to delete it later
         ctx.scene.state = {step1message: {chatId: result.chat.id, messageId: result.message_id}}
 
@@ -49,7 +59,7 @@ module.exports = (state) => {
             // Respond to the user
             await ctx.reply("Looks like you're in " + regions[id].label + ", that's so cool!")
 
-            await ctx.replyWithMarkdown("*That's all, you're ready to go!* If you want to change your preferences later, just type `/settings`. PS: Type `/help` if you need assistance to use the bot!")
+            await ctx.replyWithMarkdown("👌 *That's all, you're ready to go!* If you want to change your preferences later, just type `/settings`. PS: Type `/help` if you need assistance to use the bot!")
 
             return ctx.scene.leave() // Promise
         })
