@@ -12,7 +12,7 @@
   "dependencies": {
     "gdax": "github:coinbase/gdax-node",
     "moment": "^2.20.1",
-    "mongoose": "^5.0.0-rc1",
+    "mongoose": "^5.0.0-rc2",
     "pino": "^4.10.3",
     "smconfig": "^0.2.5",
     "telegraf": "^3.17.3"
