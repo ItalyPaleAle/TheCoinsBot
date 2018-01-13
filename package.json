@@ -1,6 +1,6 @@
 {
   "name": "thecoinsbot",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Telegram bot for real-time coins pricing from GDAX and Coinbase",
   "scripts": {
     "start": "node index.js",
