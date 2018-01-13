@@ -10,6 +10,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "big.js": "^5.0.3",
     "gdax": "github:coinbase/gdax-node",
     "moment": "^2.20.1",
     "mongoose": "^5.0.0-rc2",

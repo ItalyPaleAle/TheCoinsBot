@@ -1,4 +1,7 @@
 default:
+  log:
+    level: "debug"
+
   webhook:
     polling: yes
 
@@ -91,6 +94,9 @@ default:
     wsUri: "wss://ws-feed.gdax.com"
 
 production:
+  log:
+    level: "info"
+
   webhook:
     polling: no
 

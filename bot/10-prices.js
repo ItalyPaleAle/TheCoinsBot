@@ -1,6 +1,7 @@
 'use strict'
 
 const moment = require('moment')
+const FormatNumber = require('../lib/FormatNumber')
 
 // Answer to questions asking for the price
 module.exports = (state) => {
@@ -10,11 +11,6 @@ module.exports = (state) => {
 
     // This generates the function that answers messages
     const currencySymbols = config.get('currencySymbols')
-    const formatNumber = (numString) => {
-        numString += ''
-        const parts = numString.split('.')
-        return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (parts[1] ? '.' + parts[1] : '')
-    }
     const sendPriceFunc = (product) => {
         return async (ctx) => {
             telemetry.info({action: 'replied', reply: 'price', from: ctx.from.id, query: ctx.message.text})
@@ -74,11 +70,11 @@ module.exports = (state) => {
                     if(decimalDigits === undefined) {
                         decimalDigits = 2
                     }
-                    response += 'Price: ' + currencySymbols[dest] + formatNumber(price.price.toFixed(decimalDigits))
-                    response += '\n24hr Change: ' + price.change_percent + '%'
-                    response += '\n24hr Volume: ' + currencySymbols[source] + formatNumber(price.volume_24h)
-                    response += '\n24hr Low: ' + currencySymbols[dest] + formatNumber(price.low_24h.toFixed(decimalDigits))
-                    response += '\n24hr High: ' + currencySymbols[dest] + formatNumber(price.high_24h.toFixed(decimalDigits))
+                    response += 'Price: ' + currencySymbols[dest] + FormatNumber(price.price.toFixed(decimalDigits))
+                    response += '\n24hr Change: ' + price.change_percent.toFixed(2) + '%'
+                    response += '\n24hr Volume: ' + currencySymbols[source] + FormatNumber(price.volume_24h.toFixed(0))
+                    response += '\n24hr Low: ' + currencySymbols[dest] + FormatNumber(price.low_24h.toFixed(decimalDigits))
+                    response += '\n24hr High: ' + currencySymbols[dest] + FormatNumber(price.high_24h.toFixed(decimalDigits))
                     response += '\nLast update: ' + lastUpdate
                 }
                 allResponses.push(response)

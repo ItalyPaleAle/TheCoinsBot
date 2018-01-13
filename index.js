@@ -1,11 +1,22 @@
 'use strict'
 
-const app = require('./lib/App')
+const App = require('./lib/App')
 
-app()
+App.Start()
     .then(() => {
-        console.log('App started')
+        if(App.pino) {
+            App.pino.info('App started')
+        }
+        else {
+            console.log('App started')
+        }
     })
     .catch((err) => {
-        console.error('Uncaught exception\n', err)
+        if(App.pino) {
+            App.pino.error({error: 'Uncaught exception\n', exception: err})
+        }
+        else {
+            console.error('Uncaught exception\n', err)
+        }
     })
+
